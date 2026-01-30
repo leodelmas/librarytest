@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher{% endblock %}
+
+{% block body %}
+<div class="max-w-4xl mx-auto px-4 py-8" data-controller="book-search">
+    <h1 class="text-3xl font-bold mb-6">Rechercher</h1>
+
+    <input
+        type="search"
+        placeholder="Rechercher un livre..."
+        data-book-search-target="input"
+        data-action="input->book-search#search"
+        autocomplete="off"
+        class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+    >
+
+    <div id="search-results" data-book-search-target="results"></div>
+</div>
+{% endblock %}

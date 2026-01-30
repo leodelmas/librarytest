@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Bibliothèque - {% block title %}{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="min-h-screen flex bg-gray-100">
+        {% if app.user %}
+        <aside class="w-64 bg-gray-900 text-white flex-shrink-0 flex flex-col">
+            <div class="px-6 py-5 text-xl font-bold border-b border-gray-700">
+                Bibliothèque
+            </div>
+            <nav class="flex-1 px-4 py-4 space-y-1">
+                <a href="{{ path('book_collection') }}"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {{ app.request.attributes.get('_route') == 'book_collection' ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    <span>📚</span> Ma collection
+                </a>
+                <a href="{{ path('book_search') }}"
+                   class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {{ app.request.attributes.get('_route') starts with 'book_search' ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    <span>🔍</span> Rechercher
+                </a>
+            </nav>
+            <div class="px-4 py-4 border-t border-gray-700">
+                <p class="text-sm text-gray-400 truncate">{{ app.user.email }}</p>
+                <a href="{{ path('app_logout') }}" class="text-sm text-red-400 hover:text-red-300">Déconnexion</a>
+            </div>
+        </aside>
+        {% endif %}
+        <main class="flex-1 bg-gray-50 overflow-y-auto">
+            {% block body %}{% endblock %}
+        </main>
+    </body>
+</html>

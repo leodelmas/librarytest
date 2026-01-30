@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma collection{% endblock %}
+
+{% block body %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold">Ma collection</h1>
+        <a href="{{ path('book_search') }}" class="text-blue-500 hover:underline text-sm">+ Ajouter des livres</a>
+    </div>
+
+    {% if userBooks is empty %}
+        <p class="text-center text-gray-500 py-8">Aucun livre dans votre collection. <a href="{{ path('book_search') }}" class="text-blue-500 hover:underline">Rechercher des livres</a></p>
+    {% else %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for userBook in userBooks %}
+        <div class="bg-white rounded-lg overflow-hidden shadow-md flex flex-col"
+             data-controller="book-collection"
+             data-book-collection-id-value="{{ userBook.id }}"
+             data-book-collection-url-value="{{ path('book_delete', {id: userBook.id}) }}">
+            {% if userBook.book.coverUrl %}
+                <img src="{{ userBook.book.coverUrl }}" alt="" class="w-full h-52 object-contain bg-gray-100" loading="lazy">
+            {% else %}
+                <div class="w-full h-52 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">Pas de couverture</div>
+            {% endif %}
+            <div class="p-4 flex-1 flex flex-col">
+                <h3 class="font-semibold text-base mb-1">{{ userBook.book.title }}</h3>
+                {% if userBook.book.author %}
+                    <p class="text-gray-600 text-sm">{{ userBook.book.author }}</p>
+                {% endif %}
+                {% if userBook.book.firstPublishYear %}
+                    <p class="text-gray-400 text-xs mt-1">{{ userBook.book.firstPublishYear }}</p>
+                {% endif %}
+                <div class="mt-auto pt-3">
+                    <button
+                        data-action="book-collection#delete"
+                        data-book-collection-target="button"
+                        class="w-8 h-8 rounded-full bg-red-500 text-white text-lg font-bold hover:bg-red-700 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
+                    >&minus;</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
