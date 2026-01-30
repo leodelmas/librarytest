@@ -1,0 +1,18 @@
+{# Fragment loaded via AJAX into the modal #}
+<div data-controller="note-editor"
+     data-note-editor-url-value="{{ path('book_note_save', {id: userBook.id}) }}">
+    <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl font-bold">{{ userBook.book.title }} - Notes</h2>
+        <button data-action="note-editor#close" class="text-gray-400 hover:text-gray-700 cursor-pointer">{{ ux_icon('lucide:x', {class: 'w-5 h-5'}) }}</button>
+    </div>
+
+    <div data-note-editor-target="editor" class="bg-white"></div>
+    <input type="hidden" data-note-editor-target="content" value="{{ note.content|e('html_attr') }}">
+
+    <div class="mt-4 flex items-center gap-4">
+        <button data-action="note-editor#save"
+                class="w-8 h-8 rounded-full bg-green-500 text-white hover:bg-green-600 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
+                title="Sauvegarder">{{ ux_icon('lucide:save', {class: 'w-4 h-4'}) }}</button>
+        <span data-note-editor-target="status"></span>
+    </div>
+</div>

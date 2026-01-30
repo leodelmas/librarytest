@@ -28,8 +28,8 @@
                     data-book-year="{{ book.first_publish_year is defined ? book.first_publish_year : '' }}"
                     data-book-cover-url="{{ book.cover_i is defined ? 'https://covers.openlibrary.org/b/id/' ~ book.cover_i ~ '-M.jpg' : '' }}"
                     data-book-key="{{ book.key }}"
-                    class="w-8 h-8 rounded-full bg-blue-500 text-white text-lg font-bold hover:bg-blue-700 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
-                >+</button>
+                    class="w-8 h-8 rounded-full bg-blue-500 text-white hover:bg-blue-700 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
+                >{{ ux_icon('lucide:plus', {class: 'w-4 h-4'}) }}</button>
             </div>
         </div>
     </div>
