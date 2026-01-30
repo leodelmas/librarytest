@@ -51,6 +51,12 @@ PHPUnit is configured in `phpunit.dist.xml` with strict settings: fails on depre
 - Services: `config/services.yaml` (autowiring enabled, `src/` auto-registered)
 - Routes: `config/routes.yaml` + `config/routes/`
 
+## Icons
+
+- Use **Symfony UX Icons** with the **Lucide** icon set (`lucide:icon-name`)
+- In Twig templates: `{{ ux_icon('lucide:icon-name', {class: 'w-4 h-4'}) }}`
+- Never inline raw SVG in JS controllers — render all icons server-side via `ux_icon()` and toggle visibility with CSS classes
+
 ## Code Style
 
 - UTF-8, 4-space indentation, LF line endings (`.editorconfig`)

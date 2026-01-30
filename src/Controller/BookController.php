@@ -21,7 +21,7 @@ class BookController extends AbstractController
     public function index(UserBookRepository $userBookRepository): Response
     {
         return $this->render('book/index.html.twig', [
-            'userBooks' => $userBookRepository->findBy(['user' => $this->getUser()]),
+            'userBooks' => $userBookRepository->findByUserOrderedByStatus($this->getUser()),
         ]);
     }
 
@@ -36,6 +36,24 @@ class BookController extends AbstractController
         $em->flush();
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+    }
+
+    #[Route('/collection/{id}/status', name: 'book_status', methods: ['POST'])]
+    public function updateStatus(UserBook $userBook, EntityManagerInterface $em): JsonResponse
+    {
+        if ($userBook->getUser() !== $this->getUser()) {
+            return new JsonResponse(null, Response::HTTP_FORBIDDEN);
+        }
+
+        $status = $userBook->getStatus()->nextStatus();
+        $userBook->setStatus($status);
+        $em->flush();
+
+        return new JsonResponse([
+            'status' => $status->value,
+            'label' => $status->label(),
+            'colors' => $status->colors(),
+        ]);
     }
 
     #[Route('/collection/{id}/note', name: 'book_note', methods: ['GET'])]

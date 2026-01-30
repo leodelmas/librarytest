@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\ReadingStatus;
 use App\Repository\UserBookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,6 +22,9 @@ class UserBook
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private Book $book;
+
+    #[ORM\Column(enumType: ReadingStatus::class)]
+    private ReadingStatus $status = ReadingStatus::ToRead;
 
     #[ORM\Column]
     private \DateTimeImmutable $addedAt;
@@ -54,6 +58,17 @@ class UserBook
     public function setBook(Book $book): static
     {
         $this->book = $book;
+        return $this;
+    }
+
+    public function getStatus(): ReadingStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(ReadingStatus $status): static
+    {
+        $this->status = $status;
         return $this;
     }
 
