@@ -22,3 +22,7 @@
 ###> Uploads ###
 /public/uploads/
 ###< Uploads ###
+
+###> IDE ###
+.idea/
+###< IDE ##
