@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Book;
 
-use App\Entity\Note;
-use App\Entity\UserBook;
-use App\Repository\NoteRepository;
-use App\Repository\UserBookRepository;
+use App\Application\Book\UpdateReadingStatus;
+use App\Domain\Book\Entity\Note;
+use App\Domain\Book\Entity\UserBook;
+use App\Infrastructure\Persistence\NoteRepository;
+use App\Infrastructure\Persistence\UserBookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -51,15 +52,14 @@ class BookController extends AbstractController
     }
 
     #[Route('/collection/{id}/status', name: 'book_status', methods: ['POST'])]
-    public function updateStatus(UserBook $userBook, EntityManagerInterface $em): JsonResponse
+    public function updateStatus(UserBook $userBook, UpdateReadingStatus $updateReadingStatus): JsonResponse
     {
         if ($userBook->getUser() !== $this->getUser()) {
             return new JsonResponse(null, Response::HTTP_FORBIDDEN);
         }
 
-        $status = $userBook->getStatus()->nextStatus();
-        $userBook->setStatus($status);
-        $em->flush();
+        $userBook = $updateReadingStatus->execute($userBook);
+        $status = $userBook->getStatus();
 
         return new JsonResponse([
             'status' => $status->value,

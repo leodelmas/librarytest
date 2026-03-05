@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repository;
+namespace App\Infrastructure\Persistence;
 
-use App\Entity\User;
-use App\Entity\UserBook;
+use App\Domain\Book\Entity\UserBook;
+use App\Domain\User\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

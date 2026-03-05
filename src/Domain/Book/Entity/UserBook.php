@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Book\Entity;
 
-use App\Enum\ReadingStatus;
-use App\Repository\UserBookRepository;
+use App\Domain\Book\Enum\ReadingStatus;
+use App\Domain\User\Entity\User;
+use App\Infrastructure\Persistence\UserBookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserBookRepository::class)]

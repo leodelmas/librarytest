@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Service;
+namespace App\Infrastructure\Book;
 
+use App\Domain\Book\Port\BookCatalogInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class OpenLibraryClient
+class OpenLibraryClient implements BookCatalogInterface
 {
     public function __construct(
         private HttpClientInterface $httpClient,
@@ -27,7 +28,7 @@ class OpenLibraryClient
     {
         // workKey is like "/works/OL42900939W"
         try {
-            $response = $this->httpClient->request('GET', 'https://openlibrary.org' . $workKey . '.json');
+            $response = $this->httpClient->request('GET', "https://openlibrary.org{$workKey}.json");
             $data = $response->toArray();
         } catch (\Throwable) {
             return null;
@@ -35,11 +36,11 @@ class OpenLibraryClient
 
         $description = $data['description'] ?? null;
 
-        if (is_string($description)) {
+        if (\is_string($description)) {
             return $description;
         }
 
-        if (is_array($description) && isset($description['value'])) {
+        if (\is_array($description) && isset($description['value'])) {
             return $description['value'];
         }
 

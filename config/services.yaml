@@ -19,5 +19,13 @@ services:
     App\:
         resource: '../src/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # Ports → Adapters bindings
+    App\Domain\Book\Port\BookCatalogInterface:
+        alias: App\Infrastructure\Book\OpenLibraryClient
+
+    App\Domain\Book\Port\CoverStorageInterface:
+        alias: App\Infrastructure\Book\LocalCoverStorage
+
+    App\Infrastructure\Book\LocalCoverStorage:
+        arguments:
+            $projectDir: '%kernel.project_dir%'

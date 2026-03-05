@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum;
+namespace App\Domain\Book\Enum;
 
 enum ReadingStatus: string
 {

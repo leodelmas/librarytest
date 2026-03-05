@@ -53,7 +53,7 @@
                             data-book-collection-target="statusBtn"
                             class="w-8 h-8 rounded-full hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
                             style="background-color: {{ userBook.status.colors[0] }}; color: {{ userBook.status.colors[1] }}">
-                        {% for s in enum('App\\Enum\\ReadingStatus').cases %}
+                        {% for s in enum('App\\Domain\\Book\\Enum\\ReadingStatus').cases %}
                             <span data-status="{{ s.value }}" class="{{ userBook.status == s ? '' : 'hidden' }}">{{ ux_icon(s.icon, {class: 'w-4 h-4'}) }}</span>
                         {% endfor %}
                     </button>
