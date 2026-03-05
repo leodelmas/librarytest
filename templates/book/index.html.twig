@@ -57,16 +57,18 @@
                             <span data-status="{{ s.value }}" class="{{ userBook.status == s ? '' : 'hidden' }}">{{ ux_icon(s.icon, {class: 'w-4 h-4'}) }}</span>
                         {% endfor %}
                     </button>
+                    <a href="{{ path('book_show', {id: userBook.id}) }}"
+                       data-action="note-modal#open"
+                       class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
+                       title="Détails">{{ ux_icon('lucide:book-open', {class: 'w-4 h-4'}) }}</a>
                     <a href="{{ path('book_note', {id: userBook.id}) }}"
                        data-action="note-modal#open"
-                       class="w-8 h-8 rounded-full bg-blue-500 text-white hover:bg-blue-700 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
+                       class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
                        title="Notes">{{ ux_icon('lucide:pencil', {class: 'w-4 h-4'}) }}</a>
                     <button
                         data-action="book-collection#delete"
                         data-book-collection-target="button"
-                        class="w-8 h-8 rounded-full text-white hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
-                        style="background-color: #9ca3af"
-                        onmouseover="this.style.backgroundColor='#6b7280'" onmouseout="this.style.backgroundColor='#9ca3af'"
+                        class="w-8 h-8 rounded-full bg-red-200 text-red-600 hover:scale-110 active:scale-95 transition-all duration-150 flex items-center justify-center cursor-pointer"
                     >{{ ux_icon('lucide:minus', {class: 'w-4 h-4'}) }}</button>
                 </div>
             </div>

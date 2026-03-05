@@ -22,4 +22,27 @@ class OpenLibraryClient
 
         return $response->toArray();
     }
+
+    public function getWorkDescription(string $workKey): ?string
+    {
+        // workKey is like "/works/OL42900939W"
+        try {
+            $response = $this->httpClient->request('GET', 'https://openlibrary.org' . $workKey . '.json');
+            $data = $response->toArray();
+        } catch (\Throwable) {
+            return null;
+        }
+
+        $description = $data['description'] ?? null;
+
+        if (is_string($description)) {
+            return $description;
+        }
+
+        if (is_array($description) && isset($description['value'])) {
+            return $description['value'];
+        }
+
+        return null;
+    }
 }

@@ -42,7 +42,7 @@ class BookSearchController extends AbstractController
     }
 
     #[Route('/search/add', name: 'book_search_add', methods: ['POST'])]
-    public function add(Request $request, BookRepository $bookRepository, UserBookRepository $userBookRepository, EntityManagerInterface $em, HttpClientInterface $httpClient): JsonResponse
+    public function add(Request $request, BookRepository $bookRepository, UserBookRepository $userBookRepository, EntityManagerInterface $em, HttpClientInterface $httpClient, OpenLibraryClient $openLibrary): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -78,6 +78,7 @@ class BookSearchController extends AbstractController
             $book->setCoverUrl($coverUrl);
             $book->setFirstPublishYear(isset($data['firstPublishYear']) ? (int) $data['firstPublishYear'] : null);
             $book->setOpenLibraryKey($data['key']);
+            $book->setDescription($openLibrary->getWorkDescription($data['key']));
 
             $em->persist($book);
         }

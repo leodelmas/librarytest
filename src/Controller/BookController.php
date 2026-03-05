@@ -25,6 +25,18 @@ class BookController extends AbstractController
         ]);
     }
 
+    #[Route('/collection/{id}/show', name: 'book_show', methods: ['GET'])]
+    public function show(UserBook $userBook): Response
+    {
+        if ($userBook->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $this->render('book/show.html.twig', [
+            'userBook' => $userBook,
+        ]);
+    }
+
     #[Route('/collection/{id}', name: 'book_delete', methods: ['DELETE'])]
     public function delete(UserBook $userBook, EntityManagerInterface $em): JsonResponse
     {
